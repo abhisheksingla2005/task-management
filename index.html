@@ -1,0 +1,168 @@
+<!-- https://abhishek-singla-1677.netlify.app -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechSolutions Inc. - Advanced Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/localforage/1.10.0/localforage.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-r from-blue-500 to-purple-600 min-h-screen">
+    <div id="login-container" class="flex items-center justify-center min-h-screen">
+        <div class="glassmorphism p-8 rounded-lg shadow-lg w-96">
+            <h2 class="text-2xl font-bold mb-6 text-white text-center">Welcome to TechSolutions Inc.</h2>
+            <form id="login" class="space-y-4">
+                <div>
+                    <label for="username" class="block text-sm font-medium text-white">Username</label>
+                    <input type="text" id="username"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        required>
+                </div>
+                <div>
+                    <label for="password" class="block text-sm font-medium text-white">Password</label>
+                    <input type="password" id="password"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        required>
+                </div>
+                <button type="submit"
+                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Log
+                    In</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="app-container" class="hidden">
+        <header class="bg-white shadow">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+                <div class="flex items-center">
+                    <img src="https://ideogram.ai/assets/progressive-image/balanced/response/LA_jyymcQFaG5qsgJs3tIA" alt="TechSolutions Inc. Logo" class="h-12 w-auto mr-4">
+                    <h1 class="text-3xl font-bold text-gray-900">TechSolutions Inc.</h1>
+                </div>
+                <div id="user-info" class="flex items-center"></div>
+            </div>
+        </header>
+
+        <div class="flex">
+            <nav id="main-nav" class="bg-gray-800 text-white w-64 min-h-screen p-4">
+                <ul class="space-y-2">
+                    <li><a href="#" data-section="dashboard"
+                            class="block py-2 px-4 rounded hover:bg-gray-700">Dashboard</a></li>
+                    <li><a href="#" data-section="tasks" class="block py-2 px-4 rounded hover:bg-gray-700">Tasks</a>
+                    </li>
+                    <li><a href="#" data-section="projects"
+                            class="block py-2 px-4 rounded hover:bg-gray-700">Projects</a></li>
+                    <li><a href="#" data-section="team" class="block py-2 px-4 rounded hover:bg-gray-700">Team</a></li>
+                </ul>
+            </nav>
+
+            <main id="content-area" class="flex-1 p-8">
+                <div id="dashboard" class="hidden">
+                    <h2 class="text-2xl font-bold mb-4">Dashboard</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="glassmorphism p-4">
+                            <h3 class="text-xl font-semibold mb-2 text-white">Task Overview</h3>
+                            <canvas id="task-chart"></canvas>
+                        </div>
+                        <div class="glassmorphism p-4">
+                            <h3 class="text-xl font-semibold mb-2 text-white">Recent Activities</h3>
+                            <ul id="activity-list" class="space-y-2"></ul>
+                        </div>
+                        <div id="project-progress-container" class="glassmorphism p-4">
+                            <h3 class="text-xl font-semibold mb-2 text-white">Project Progress</h3>
+                            <canvas id="project-progress"></canvas>
+                        </div>
+                        <div class="glassmorphism p-4">
+                            <h3 class="text-xl font-semibold mb-2 text-white">Upcoming Deadlines</h3>
+                            <ul id="deadline-list" class="space-y-2"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tasks" class="hidden">
+                    <h2 class="text-2xl font-bold mb-4">Tasks</h2>
+                    <div class="mb-4 flex justify-between items-center">
+                        <button id="add-task"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            <i class="fas fa-plus mr-2"></i>Add Task
+                        </button>
+                        <div>
+                            <label for="task-status-filter" class="mr-2">Filter by status:</label>
+                            <select id="task-status-filter"
+                                class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                <option value="all">All</option>
+                                <option value="pending">Pending</option>
+                                <option value="in progress">In Progress</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="task-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                </div>
+
+                <div id="projects" class="hidden">
+                    <h2 class="text-2xl font-bold mb-4">Projects</h2>
+                    <button id="add-project"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
+                        <i class="fas fa-plus mr-2"></i>Add Project
+                    </button>
+                    <div id="project-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                </div>
+
+                <div id="team" class="hidden">
+                    <h2 class="text-2xl font-bold mb-4">Team</h2>
+                    <button id="add-team-member"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
+                        <i class="fas fa-plus mr-2"></i>Add Team Member
+                    </button>
+                    <div id="team-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div id="modal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog"
+        aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div
+                class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title"></h3>
+                            <div class="mt-2">
+                                <div id="modal-form"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button"
+                        class="close w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

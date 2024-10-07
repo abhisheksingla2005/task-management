@@ -1,0 +1,113 @@
+{
+    "users": [
+      {
+        "id": 1,
+        "username": "admin",
+        "password": "admin123",
+        "role": "admin",
+        "name": "Admin User",
+        "avatar": "https://img.icons8.com/?size=48&id=23280&format=png"
+      },
+      {
+        "id": 2,
+        "username": "employee",
+        "password": "emp123",
+        "role": "employee",
+        "name": "John Doe",
+        "avatar": "https://img.icons8.com/?size=40&id=23461&format=png"
+      },
+      {
+        "id": 3,
+        "username": "employee2",
+        "password": "emp456",
+        "role": "employee",
+        "name": "Jane Smith",
+        "avatar": "https://img.icons8.com/?size=48&id=23347&format=png"
+      }
+    ],
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Complete project proposal",
+        "assignee": 2,
+        "status": "In Progress",
+        "dueDate": "2023-06-30",
+        "priority": "High"
+      },
+      {
+        "id": 2,
+        "title": "Review code changes",
+        "assignee": 2,
+        "status": "Pending",
+        "dueDate": "2023-07-05",
+        "priority": "Medium"
+      },
+      {
+        "id": 3,
+        "title": "Update documentation",
+        "assignee": 2,
+        "status": "Completed",
+        "dueDate": "2023-06-25",
+        "priority": "Low"
+      },
+      {
+        "id": 4,
+        "title": "Prepare presentation",
+        "assignee": 3,
+        "status": "In Progress",
+        "dueDate": "2023-07-10",
+        "priority": "High"
+      },
+      {
+        "id": 5,
+        "title": "Client meeting",
+        "assignee": 3,
+        "status": "Pending",
+        "dueDate": "2023-07-15",
+        "priority": "Medium"
+      }
+    ],
+    "projects": [
+      {
+        "id": 1,
+        "name": "Website Redesign",
+        "status": "In Progress",
+        "completion": 65
+      },
+      {
+        "id": 2,
+        "name": "Mobile App Development",
+        "status": "Pending",
+        "completion": 30
+      },
+      {
+        "id": 3,
+        "name": "Database Migration",
+        "status": "Completed",
+        "completion": 100
+      }
+    ],
+    "activities": [
+      {
+        "id": 1,
+        "user": "John Doe",
+        "action": "completed",
+        "item": "Update documentation",
+        "timestamp": "2023-06-25 14:30"
+      },
+      {
+        "id": 2,
+        "user": "Jane Smith",
+        "action": "created",
+        "item": "Client meeting",
+        "timestamp": "2023-06-26 09:15"
+      },
+      {
+        "id": 3,
+        "user": "Admin User",
+        "action": "updated",
+        "item": "Website Redesign project",
+        "timestamp": "2023-06-26 11:45"
+      }
+    ]
+  }
